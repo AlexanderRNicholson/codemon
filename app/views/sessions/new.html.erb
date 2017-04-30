@@ -1,0 +1,21 @@
+<img src="/images/codemon_logo.png">
+<h2>by Alex Nicholson</h2>
+<h3>made with Javascript and Ruby</h3>
+
+<h3>Login</h3>
+
+<form action="/sessions" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<input type="text" id="Name" name = "name">
+	<input type="password" id="Password" name = "password">
+	<input type="submit" name="Log In" value="Log In">
+</form>
+
+<h3>Register</h3>
+
+<form action="/users" method="POST">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+    Name: <input type="text" name="user[name]">
+    Password:<input type="password" name="user[password]">
+    <input type=submit label="New User">
+</form>

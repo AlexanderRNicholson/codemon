@@ -1,0 +1,166 @@
+<html>
+   <head>
+       <title>Codemon!</title>
+       <link rel="stylesheet" type="text/css" href="codemon.css">
+       <style type="text/css">
+       
+           div.row {
+               margin: -5px;
+           }
+           div.row div {
+               width:77.7px;
+               height:62px;
+               display:inline-block;
+               border:1px dotted green;
+           }
+           
+           div.inaccessible {
+               border:1px dotted red;
+           }
+           
+           div.NPC {
+               width:80px;
+               height:80px;
+           }
+           
+           div.blank {
+               border:1px dotted blue;
+           }
+           
+           div#world {
+               position:relative;
+           }
+           div#player {
+               background-repeat: no-repeat;
+               position: absolute;
+               height: 80px;
+               width: 80px;
+               left: 300;
+               top: 300;
+           }
+            .right {
+              background: url('/images/boy_right_sprite.png');
+            }
+            .up {
+              background: url('/images/boy_back_sprite.png');
+            }
+            .down {
+              background: url('/images/boy_front_sprite.png');
+            }
+            .left {
+              background: url('/images/boy_left_sprite.png');
+            }
+           div#display {
+               background: url('/images/background.jpg');
+               background-repeat: no-repeat;
+           }
+           
+       </style>
+       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+       <script type="text/javascript">
+           $(document).ready(function() {
+               
+               var messages = [
+                   "<%= current_user.name %>! Your Codémon journey is about to begin!",
+                   "In time you will become a self-sufficient developer!"
+                  
+                   ]
+            
+                var i = -1;
+                
+                var text_box = $("#text_box");
+                
+                $("#text_box").click(function(){
+                    text_box.text(messages[i = ++i % messages.length]);
+                })
+                
+                
+           })
+        </script>
+        
+    </head>
+    <body>
+        <div id='display'>
+            <div style="height: 620px; width: 700px; border:solid green 1px;" id='world'>
+                <div id='player' class='up'></div>
+            </div>
+            
+            <div style="height: 100px; width: 700px; border:solid red 1px;" id='text_box'></div>
+            
+        </div>
+    </body>
+    <script type="text/javascript"> 
+            
+            var map = {
+                cols: 9,
+                rows: 8,
+                tsize: 77,
+                tiles: [
+                [2,2,2,2,2,2,2,2,2],
+                [2,2,2,0,0,2,2,2,2],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,2,2,2,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [2,2,2,0,0,2,2,2,2],
+                [0,0,0,0,0,0,0,0,0]
+                ],
+                getTile: function(col, row) {
+                    return this.tiles[row * map.cols+ col]
+                }
+            };
+    
+            var player = document.getElementById('player');
+            var display = document.getElementById('display');
+            
+            var playerStart_x=0;
+            var playerStart_y=0;
+            
+            
+            
+            function anim(e){
+                if(e.keyCode==39){
+                    console.log("function fired, 39 pressed")
+                    console.log(player);
+                    playerStart_x +=77.7;
+                    if(playerStart_x >= 625){
+                        playerStart_x = 622
+                    }
+                    player.style.left = playerStart_x + 'px';
+                    player.className = "right"
+                    
+                }
+                if(e.keyCode==37){
+                    playerStart_x -=77.7;
+                    if(playerStart_x <= 0){
+                        playerStart_x = 0
+                    }
+                    player.style.left = playerStart_x + 'px';
+                    player.className = "left";
+                }
+                
+                if(e.keyCode==40){
+                    console.log("function fired, 40 pressed")
+                    playerStart_y +=65;
+                    if(playerStart_y >= 520){
+                        playerStart_y = 520
+                    }
+                    player.style.top = playerStart_y + 'px';
+                    player.className = "down";
+                    
+                }
+                
+                if(e.keyCode==38){
+                    console.log("function fired, 38 pressed")
+                    playerStart_y -=65;
+                    if(playerStart_y <= 0){
+                        playerStart_y = 0
+                    }
+                    player.style.top = playerStart_y + 'px'
+                    player.className = "up";
+                }
+            }
+            
+            document.onkeydown = anim;
+        </script>
+</html>       

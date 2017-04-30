@@ -1,0 +1,45 @@
+<html>
+   <head>
+       <title>Codemon!</title>
+       <link rel="stylesheet" type="text/css" href="codemon.css">
+       <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+       <script type="text/javascript">
+           $(document).ready(function() {
+               var messages = [
+                   "Ah! You're a <%= current_user.gender %>!",
+                   "Excellent! Before you enter the Dojo, you should choose your first Codémon!",
+                   "Choose carefully!"
+                   ]
+            
+                var i = 0;
+                
+                var text_box = $("#text_box");
+                
+                $("#text_box").click(function(){
+                    text_box.text(messages[i++]);
+                })
+           })
+        </script>
+    </head>
+    <body>
+        <div id='display'>
+            <%= link_to image_tag "CSSaur_front.png", :alt => "CSSaur", :id => "#CSSaur" %>
+            <form style="display:inline-block" action="/monsters/1" method="POST">
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <input type="submit" value="CSSaur" data-confirm="You want the Styling Codémon, CSSaur? It's excellent at making code look good.">
+            </form>
+            <%= link_to image_tag "JavaSmander_front.png", :alt => "JavaSmander", :id => "#JavaSmander" %>
+            <form style="display:inline-block" action="/monsters/2" method="POST">
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <input type="submit" value="JavaSmander" data-confirm="You want the Scripting Codémon, JavaSmander? It's a very versatile Codémon.">
+            </form>
+            <%= link_to image_tag "HTurtMLe_front.png", :alt => "HTurtMLe", :id => "#HTurtMLe" %>
+            <form style="display:inline-block" action="/monsters/3" method="POST">
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <input type="submit" value="HTurtMLe" data-confirm="You want the Markup Codémon, HTurtMLe? Lots of people start with this Codémon.">
+            </form>
+            <div style="height: 100px; border:solid red 1px;" id='text_box'></div>
+            
+        </div>                
+    </body>
+</html>

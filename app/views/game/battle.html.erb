@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Codémon Battle!</title>
+    </head>
+        
+        <body>
+             <div id='display'>
+            <div style="height: 620px; width: 700px; border:solid green 1px;" id='battle_box'>
+                <%= @enemy.name %> Level <%= @enemy.level %> Hit Points: <progress id="enemy_health" value="<%= @enemy.current_hit_points %>" max="<%= @enemy.hit_points %>"></progress>
+                
+                <div id=enemy_half style="height:310px; width:700px; border:dotted orange 1px">
+                    <div id='enemy'>
+                        <% if @enemy.current_hit_points <= 0 %>
+                        <img align="right" style="height:200px; width:200px" src="/images/nate_battle_sprite.png">
+                        <% else %>
+                        <img align="right" style="height:200px; width:200px" src="/images/monsters/<%= @enemy.id %>_front.png">
+                        <% end %>
+                    </div>
+                </div>
+                <div id=monster_half style="height:310px; width:700px; border:dotted pink 1px">
+                    <p style="text-align:right"><%= @monster.name %> Level <%= @monster.level %></p>
+                    <p style="text-align:right">Hit Points: <%= @monster.current_hit_points %>/<%= @monster.hit_points %> <progress id="monster_health" value="<%= @monster.current_hit_points %>" max="<%= @monster.hit_points %>"></progress></p>
+                    
+                    <div id='back' style="align:bottom; display:inline-block; border:dotted pink 1px">
+                        <img align="bottom" style="height:200px; width:200px" src="/images/monsters/<%= @monster.id %>_back.png">
+                    </div>
+                    <% @monster.moves.each do |move| %>
+                        <a href="/moves/<%= move.name %>"><div style="display:inline-block; align:top; height:80px; width:100px; background-color: yellow border:solid orange 1px" class='move_box'>
+                            <p><%= move.name %></p>
+                            <p><%= move.current_stamina %>/<%= move.max_stamina %></p>
+                        </div>
+                        <% end %></a>
+                    </div>
+                </div>
+                
+                <div style="height: 100px; width: 700px; border:solid red 1px; overflow-y: hidden" id='text_box'>
+                    <% if @battle_messages %>
+                        <% @battle_messages.reverse.each do |e| %>
+                            <p><%= e %></p>
+                        <% end %>
+                    <% end %>
+                    <% if @enemy.current_hit_points <= 0 %>
+                        <% puts "battle ended, conditional firing" %>
+                        <% session[:battle_messages] = [] %>
+                        <p>NATE: Wow! Great job! You have the potential to be a great Codémon trainer! <a href='/game/battle_end'><button>END</button></a></p>
+                    <% end %>
+                </div>
+            </div>
+
+                        
+
+                    
+                </script>
+        </body>
+</html>
